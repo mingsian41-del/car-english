@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汽車英文專業術語行動學習網</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --accent-label: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            padding-bottom: 60px;
+            line-height: 1.5;
+        }
+
+        /* 固定導覽列 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 8px;
+        }
+
+        .page-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            background: #f1f5f9;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .speed-control input {
+            cursor: pointer;
+            width: 100px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 6px;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            height: 4px;
+        }
+        .nav-tabs::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        .nav-btn {
+            background-color: #f1f5f9;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .count-badge {
+            background-color: rgba(0, 0, 0, 0.08);
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .nav-btn.active .count-badge {
+            background-color: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        /* 主要內容區排版 */
+        main {
+            max-width: 1200px;
+            margin: 135px auto 20px auto;
+            padding: 0 15px;
+        }
+
+        .chapter-section {
+            margin-bottom: 40px;
+            scroll-margin-top: 145px;
+        }
+
+        .chapter-title {
+            font-size: 1.5rem;
+            color: #0f172a;
+            border-left: 6px solid var(--primary-color);
+            padding-left: 12px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #eff6ff, transparent);
+            padding-top: 6px;
+            padding-bottom: 6px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .sub-chapters-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 992px) {
+            .sub-chapters-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .sub-chapter-block {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .sub-chapter-title {
+            font-size: 1.1rem;
+            color: #1e293b;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f1f5f9;
+            font-weight: 600;
+        }
+
+        .words-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .word-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            border: 1px solid #edf2f7;
+        }
+
+        .word-card:hover {
+            background-color: #f1f5f9;
+        }
+
+        .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+            padding-right: 10px;
+        }
+
+        .word-chinese-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .word-num {
+            font-weight: bold;
+            color: var(--primary-color);
+            min-width: 24px;
+        }
+
+        .word-ch {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .word-en {
+            font-size: 1rem;
+            color: #0f172a;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .tag-label {
+            font-size: 0.7rem;
+            background-color: var(--accent-label);
+            color: #475569;
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        /* 發音練習功能按鍵 */
+        .speak-btn {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .speak-btn:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .speak-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .top-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #1e293b;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            opacity: 0.8;
+            transition: 0.2s;
+        }
+        .top-btn:hover { opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="controls-row">
+                <div class="page-title">🚗 汽車英文專業術語行動學習網</div>
+                <div class="speed-control">
+                    <span>發音練習語速：</span>
+                    <input type="range" id="speedRange" min="0.5" max="2.0" step="0.1" value="1.0">
+                    <span id="speedVal">1.0x</span>
+                </div>
+            </div>
+            <div class="nav-tabs" id="navTabs"></div>
+        </div>
+    </header>
+
+    <main id="mainContent"></main>
+
+    <button class="top-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})">▲</button>
+
+    <script>
+        // 依照上傳 PDF 文本精準結構化之完整單字資料庫
+        const database = [
+            {
+                chapter: "第一章 機具 (Machine & Tool)",
+                shortName: "第一章 機具",
+                subs: [
+                    {
+                        name: "一、 機械 (Machine)",
+                        words: [
+                            { ch: "空氣壓縮機", en: "Air Compressor" },
+                            { ch: "頂高機", en: "Lifter" },
+                            { ch: "砂輪機", en: "Bench Grinder" },
+                            { ch: "千斤頂", en: "Jack" },
+                            { ch: "引擎吊架", en: "Engine Crane" }
+                        ]
+                    },
+                    {
+                        name: "二、 測試儀器 (Tester)",
+                        words: [
+                            { ch: "側滑試驗器", en: "Side Slip Tester" },
+                            { ch: "煞車試驗器", en: "Brake Tester" },
+                            { ch: "傾斜度試驗器", en: "Tilt Tester" },
+                            { ch: "電腦式輪胎平衡機", en: "Computer Wheel Balancer" },
+                            { ch: "頭燈試驗器", en: "Head Light Tester" },
+                            { ch: "音量計", en: "Sound Level Meter" },
+                            { ch: "軸重計", en: "Axle Load Meter" },
+                            { ch: "轉速計", en: "Tachometer" },
+                            { ch: "車速計", en: "Speed Meter" },
+                            { ch: "廢氣分析儀", en: "Exhaust Gas Analyzer" },
+                            { ch: "柴油車煙度計", en: "Diesel Smoke Meter" },
+                            { ch: "車輛診斷儀器", en: "Scan Tool" }
+                        ]
+                    },
+                    {
+                        name: "三、 手工具 (Hand Tools)",
+                        words: [
+                            { ch: "工具箱", en: "Tool Kit" },
+                            { ch: "梅花扳手", en: "Box Wrench" },
+                            { ch: "開口扳手", en: "Open End Wrench" },
+                            { ch: "棘輪扳手", en: "Ratchet" },
+                            { ch: "氣動扳手", en: "Air Impact Wrench" },
+                            { ch: "活動扳手", en: "Monkey Spanner" },
+                            { ch: "扭力扳手", en: "Torque Wrench" },
+                            { ch: "套筒組", en: "Socket Set" },
+                            { ch: "螺絲起子", en: "Screw Driver" },
+                            { ch: "尖嘴鉗", en: "Needle Nose Plier" },
+                            { ch: "斜口鉗", en: "Diagonal Cutter" },
+                            { ch: "萬能鉗", en: "Multigrip Plier" },
+                            { ch: "鯉魚鉗", en: "Combination Slip Joint Plier" },
+                            { ch: "老虎鉗", en: "Vise" },
+                            { ch: "榔頭", en: "Hammer" },
+                            { ch: "拉拔器", en: "Puller" },
+                            { ch: "工作燈", en: "Working Lamp" }
+                        ]
+                    },
+                    {
+                        name: "四、 量具 (Measuring Tools)",
+                        words: [
+                            { ch: "輪胎氣壓錶", en: "Tire Pressure Gauge" },
+                            { ch: "鋼尺", en: "Steel Rule" },
+                            { ch: "厚薄規", en: "Thickness Gauge" },
+                            { ch: "火星塞量規", en: "Spark Plug Gauge" },
+                            { ch: "游標卡尺", en: "Slide Caliper" },
+                            { ch: "測微器", en: "Micrometer" },
+                            { ch: "比重計", en: "Hydrometer" },
+                            { ch: "針盤量規", en: "Dial Indicator" },
+                            { ch: "溫度計", en: "Temperature Gauge" },
+                            { ch: "電壓錶", en: "Voltmeter" },
+                            { ch: "電流錶", en: "Ammeter" },
+                            { ch: "多功能電錶", en: "Multimeter" }
+                        ]
+                    },
+                    {
+                        name: "五、 機件 (Parts)",
+                        words: [
+                            { ch: "螺栓", en: "Bolt" },
+                            { ch: "螺帽", en: "Nut" },
+                            { ch: "墊片", en: "Washer" },
+                            { ch: "彈簧", en: "Spring" },
+                            { ch: "銷", en: "Pin" },
+                            { ch: "鍵", en: "Key" },
+                            { ch: "油封", en: "Oil Seal" },
+                            { ch: "軸承", en: "Bearing" }
+                        ]
+                    }
+                ]
+            },
+            {
+                chapter: "第二章 引擎 (Engine)",
+                shortName: "第二章 引擎",
+                subs: [
+                    {
+                        name: "一、 專業術語對照 (Terminology)",
+                        words: [
+                            { ch: "上死點(TDC)", en: "Top Dead Center" },
+                            { ch: "下死點(BDC)", en: "Bottom Dead Center" },
+                            { ch: "行程", en: "Stroke" },
+                            { ch: "燃燒室", en: "Combustion Chamber" },
+                            { ch: "排氣量", en: "Displacement" },
+                            { ch: "汽缸", en: "Cylinder" },
+                            { ch: "缸徑", en: "Bore" }
+                        ]
+                    },
+                    {
+                        name: "一、 專業術語相關名詞 (General Terms)",
+                        words: [
+                            { ch: "最大扭力", en: "Maximum Torque" },
+                            { ch: "性能", en: "Performance" },
+                            { ch: "爆震", en: "Detonation" },
+                            { ch: "制動馬力", en: "Brake Horse Power" },
+                            { ch: "真空", en: "Vacuum" },
+                            { ch: "搪缸", en: "Boring" },
+                            { ch: "辛烷值", en: "Octane Number" },
+                            { ch: "十六烷值", en: "Cetane Number" },
+                            { ch: "液化石油氣(L.P.G)", en: "Liquefied Petroleum Gas" },
+                            { ch: "無鉛汽油", en: "Unleaded Gasoline" },
+                            { ch: "油箱容量", en: "Fuel Tank Capacity" },
+                            { ch: "壓縮比", en: "Compression Ratio" }
+                        ]
+                    },
+                    {
+                        name: "二、 四行程循環 (Four Stroke Cycles)",
+                        words: [
+                            { ch: "進氣行程", en: "Intake Stroke" },
+                            { ch: "壓縮行程", en: "Compression Stroke" },
+                            { ch: "動力行程", en: "Power Stroke" },
+                            { ch: "排氣行程", en: "Exhaust Stroke" }
+                        ]
+                    },
+                    {
+                        name: "三、 引擎結構對照 (Engine Structure)",
+                        words: [
+                            { ch: "搖臂", en: "Rocker Arms" },
+                            { ch: "汽門彈簧", en: "Valve Spring" },
+                            { ch: "凸輪軸", en: "Camshaft" },
+                            { ch: "凸輪軸鏈輪", en: "Camshaft Sprocket" },
+                            { ch: "活塞環", en: "Piston Ring" },
+                            { ch: "正時鏈條", en: "Timing Chain" },
+                            { ch: "曲軸齒輪", en: "Crankshaft Gear" },
+                            { ch: "鏈條張力器", en: "Chain Tensioner" },
+                            { ch: "連桿", en: "Connecting Rod" },
+                            { ch: "活塞", en: "Piston" },
+                            { ch: "曲軸", en: "Crankshaft" },
+                            { ch: "飛輪", en: "Flywheel" }
+                        ]
+                    },
+                    {
+                        name: "三、 引擎結構相關名詞 (General Terms)",
+                        words: [
+                            { ch: "活塞銷", en: "Piston Pin" },
+                            { ch: "汽缸套(汽缸襯套)", en: "Cylinder Sleeve (Cylinder liner)" },
+                            { ch: "汽缸體", en: "Cylinder Block" },
+                            { ch: "正時皮帶", en: "Timing Belt" },
+                            { ch: "汽門", en: "Valve" },
+                            { ch: "頂上汽門(OHV)", en: "Over Head Valve" },
+                            { ch: "頂上凸輪軸(OHC)", en: "Over Head Camshaft" },
+                            { ch: "頂上單凸輪軸(SOHC)", en: "Single Over Head Camshaft" },
+                            { ch: "頂上双凸輪軸(DOHC)", en: "Double Over Head Camshaft" },
+                            { ch: "可變汽門正時(VVT)", en: "Variable Valve Timing" }
+                        ]
+                    },
+                    {
+                        name: "四、 汽油引擎總成對照 (Gasoline Engine)",
+                        words: [
+                            { ch: "汽門室蓋(搖臂蓋)", en: "Cylinder Head Cover" },
+                            { ch: "機油蓋", en: "Oil Cap" },
+                            { ch: "液壓汽門舉桿", en: "Hydraulic Valve Lifters" },
+                            { ch: "皮帶", en: "Belt" },
+                            { ch: "皮帶盤", en: "Pulley" },
+                            { ch: "油底殼", en: "Oil Pan" }
+                        ]
+                    },
+                    {
+                        name: "四、 汽油引擎總成相關名詞 (General Terms)",
+                        words: [
+                            { ch: "汽缸床墊片", en: "Cylinder Head Gasket" },
+                            { ch: "曲軸箱", en: "Crankcase" }
+                        ]
+                    },
+                    {
+                        name: "五、 電子燃料噴射系統 (EFI Systems)",
+                        words: [
+                            { ch: "燃料噴油器", en: "Fuel Injector" },
+                            { ch: "節氣門位置感知器(TPS)", en: "Throttle Position Sensor" },
+                            { ch: "空氣流量感知器(MAF)", en: "Mass Airflow Sensor" },
+                            { ch: "怠速控制閥(IACV)", en: "Idle Air Control Valve" },
+                            { ch: "燃油邦浦", en: "Fuel Pump" },
+                            { ch: "引擎水溫感知器(ECT)", en: "Engine Coolant Temperature Sensor" },
+                            { ch: "爆震感知器(KS)", en: "Knock Sensor" },
+                            { ch: "加熱式含氧感知器(HO2S)", en: "Heated Oxygen Sensor" }
+                        ]
+                    },
+                    {
+                        name: "五、 電子燃料噴射相關名詞 (General Terms)",
+                        words: [
+                            { ch: "引擎控制電腦(ECU)", en: "Engine Control Unit" },
+                            { ch: "感知器", en: "Sensor" },
+                            { ch: "歧管絕對壓力感知器(MAP)", en: "Manifold Absolute Pressure Sensor" },
+                            { ch: "凸輪軸位置感知器(CMP)", en: "Camshaft Position Sensor" },
+                            { ch: "曲軸位置感知器(CKP)", en: "Crankshaft Position Sensor" },
+                            { ch: "車速感知器(VSS)", en: "Vehicle Speed Sensor" },
+                            { ch: "進氣溫度感知器(IAT)", en: "Intake Air Temperature Sensor" },
+                            { ch: "節流閥", en: "Throttle Valve" },
+                            { ch: "缸內直接噴射引擎(GDI)", en: "Gasoline Direct Injection Engine" },
+                            { ch: "電子節氣門控制系統", en: "Electronic Throttle Control System" }
+                        ]
+                    },
+                    {
+                        name: "六、 柴油引擎燃油系統 (Diesel Fuel System)",
+                        words: [
+                            { ch: "燃油濾清器", en: "Fuel Filter" },
+                            { ch: "回油管", en: "Return Line" },
+                            { ch: "噴射邦浦", en: "Injection Pump" },
+                            { ch: "正時器", en: "Timer" },
+                            { ch: "供油邦浦", en: "Feed Pump" },
+                            { ch: "油水分離器", en: "Water Separation" },
+                            { ch: "油箱", en: "Fuel Tank" },
+                            { ch: "供油管", en: "Fuel Supply Line" },
+                            { ch: "調速器", en: "Governor" },
+                            { ch: "噴油嘴", en: "Nozzle" },
+                            { ch: "高壓鋼管", en: "High Pressure Pipe" },
+                            { ch: "預熱塞(相關名詞)", en: "Glow Plug" }
+                        ]
+                    },
+                    {
+                        name: "七、 共軌式燃油系統 (Common Rail System)",
+                        words: [
+                            { ch: "高壓邦浦", en: "High Pressure Pump" },
+                            { ch: "軌內壓力感知器", en: "Rail Pressure Sensor" },
+                            { ch: "流量限流閥", en: "Flow Limiting Valve" },
+                            { ch: "共軌管", en: "Common Rail" },
+                            { ch: "壓電式噴油器", en: "Piezo Injector" },
+                            { ch: "油門踏板位置感知器", en: "Accelerator Pedal Position Sensor" },
+                            { ch: "引擎轉速感知器", en: "Engine Speed Sensor" },
+                            { ch: "電子控制單元(ECU)", en: "Electronic Control Unit" },
+                            { ch: "壓力調節閥", en: "Pressure Regulation Valve" },
+                            { ch: "混合比感知器(相關名詞)", en: "Air/Fuel Ratio Sensor" }
+                        ]
+                    },
+                    {
+                        name: "八、 潤滑系統 (Lubrication System)",
+                        words: [
+                            { ch: "機油濾清器", en: "Oil Filter" },
+                            { ch: "機油冷卻器", en: "Oil Cooler" },
+                            { ch: "機油邦浦", en: "Oil Pump" },
+                            { ch: "機油(相關名詞)", en: "Oil" },
+                            { ch: "機油尺(相關名詞)", en: "Oil Dipstick" },
+                            { ch: "洩油塞(相關名詞)", en: "Drain Plug" },
+                            { ch: "機油油位感知器(相關名詞)", en: "Oil Level Sensor" },
+                            { ch: "機油壓力開關(相關名詞)", en: "Oil Pressure Switch" },
+                            { ch: "美國汽車工程師學會(SAE)", en: "Society of Automotive Engineers" },
+                            { ch: "美國石油學會(API)", en: "American Petroleum Institute Classification" },
+                            { ch: "歐洲汽車製造商協會(ACEA)", en: "Association of European Automobile Manufacturers" }
+                        ]
+                    },
+                    {
+                        name: "九、 冷卻系統 (Cooling System)",
+                        words: [
+                            { ch: "水箱", en: "Radiator" },
+                            { ch: "冷卻風扇", en: "Cooling Fan" },
+                            { ch: "水箱水管", en: "Radiator Hose" },
+                            { ch: "熱交換器", en: "Heat Exchanger" },
+                            { ch: "節溫器", en: "Thermostat" },
+                            { ch: "水邦浦", en: "Water Pump" },
+                            { ch: "副水箱", en: "Auxiliary Tank" },
+                            { ch: "水箱蓋(相關名詞)", en: "Radiator Cap" },
+                            { ch: "冷卻水(相關名詞)", en: "Cooling Water" },
+                            { ch: "防凍劑(相關名詞)", en: "Anti Freezer" },
+                            { ch: "冷卻水位感知器(相關名詞)", en: "Coolant Level Sensor" },
+                            { ch: "溫控開關(相關名詞)", en: "Thermo Switch" }
+                        ]
+                    },
+                    {
+                        name: "十、 進排氣系統 (Intake & Exhaust System)",
+                        words: [
+                            { ch: "排氣歧管", en: "Exhaust Manifold" },
+                            { ch: "進氣歧管", en: "Intake Manifold" },
+                            { ch: "三元觸媒轉換器(TWC)", en: "Three-Way Catalytic Converter" },
+                            { ch: "消音器", en: "Muffler" },
+                            { ch: "排氣管", en: "Exhaust Pipe" },
+                            { ch: "空氣濾清器", en: "Air Cleaner" },
+                            { ch: "中間冷卻器", en: "Inter Cooler" },
+                            { ch: "渦輪增壓器", en: "Turbocharger" },
+                            { ch: "可變幾何渦輪增壓器(VGT)", en: "Variable Geometry Turbocharger" }
+                        ]
+                    },
+                    {
+                        name: "十一、 排放污染控制 (Emission Control)",
+                        words: [
+                            { ch: "空氣污染", en: "Air Pollution" },
+                            { ch: "空氣燃料比", en: "Air Fuel Ratio" },
+                            { ch: "一氧化碳(CO)", en: "Carbon Monoxide" },
+                            { ch: "碳氫化合物(HC)", en: "Hydrocarbon" },
+                            { ch: "氮氧化合物(NOX)", en: "Nitrogen Oxides" },
+                            { ch: "粒狀污染物(PM)", en: "Particulate Matters" },
+                            { ch: "百萬分之一(PPM)", en: "Parts Per Million" },
+                            { ch: "故障指示燈(MIL)", en: "Malfunction Indicator Lamp" },
+                            { ch: "積極式曲軸箱通風(PCV)", en: "Positive Crankcase Ventilation" },
+                            { ch: "蒸發氣排放(EVAP)", en: "Evaporative Emission" },
+                            { ch: "活性碳罐", en: "Carbon Canister" },
+                            { ch: "活性碳罐電磁閥", en: "Carbon Canister Solenoid Valve" },
+                            { ch: "排氣再循環(EGR)", en: "Exhaust Gas Recirculation" },
+                            { ch: "排氣再循環控制閥", en: "EGR Control Valve" },
+                            { ch: "觸媒微粒過濾器(CPF)", en: "Catalyzed Particulate Filter" },
+                            { ch: "尿素", en: "Urea" },
+                            { ch: "選擇性觸媒轉化器(SCR)", en: "Selective Catalytic Reduction" },
+                            { ch: "排氣溫度感知器", en: "Exhaust Temperature Sensor" },
+                            { ch: "差壓感知器", en: "Differential Pressure Sensor" }
+                        ]
+                    }
+                ]
+            },
+            {
+                chapter: "第三章 底盤 (Chassis)",
+                shortName: "第三章 底盤",
+                subs: [
+                    {
+                        name: "一、 傳動系統 (Powertrain System)",
+                        words: [
+                            { ch: "前輪軸", en: "Front Axle Shaft" },
+                            { ch: "後輪軸", en: "Rear Axle Shaft" },
+                            { ch: "傳動軸", en: "Propeller Shaft" },
+                            { ch: "差速器", en: "Differential" },
+                            { ch: "後輪", en: "Rear Wheel" },
+                            { ch: "驅動軸(相關名詞)", en: "Drive Shaft" },
+                            { ch: "萬向接頭(相關名詞)", en: "Universal Joint" },
+                            { ch: "滑動接頭(相關名詞)", en: "Sliding Joint" },
+                            { ch: "等速接頭(相關名詞)", en: "Constant Velocity Joint" },
+                            { ch: "最終傳動比(相關名詞)", en: "Final Drive Ratio" },
+                            { ch: "四輪傳動(相關名詞)", en: "Four Wheel Drive" }
+                        ]
+                    },
+                    {
+                        name: "二、 變速箱 (Transmission)",
+                        words: [
+                            { ch: "聯合傳動箱總成", en: "Transaxle Assembly" },
+                            { ch: "冷卻器", en: "Cooler" },
+                            { ch: "排檔桿", en: "Shift Lever" },
+                            { ch: "變速箱(相關名詞)", en: "Transmission" },
+                            { ch: "手排變速箱(M/T)", en: "Manual Transmission" },
+                            { ch: "自排變速箱(A/T)", en: "Automatic Transmission" },
+                            { ch: "無段變速箱(CVT)", en: "Continuously Variable Transmission" },
+                            { ch: "雙離合器變速箱(DCT)", en: "Dual Clutch Transmission" },
+                            { ch: "變速箱油(相關名詞)", en: "Transmission Oil" },
+                            { ch: "自動變速箱油(ATF)", en: "Automatic Transmission Fluid" },
+                            { ch: "油量尺(相關名詞)", en: "Dipstick" },
+                            { ch: "扭力轉換器(相關名詞)", en: "Torque Converter" },
+                            { ch: "齒輪比(相關名詞)", en: "Gear Ratio" },
+                            { ch: "電腦輔助換檔(相關名詞)", en: "Computer Assist Shift Gear" },
+                            { ch: "智慧型排檔(相關名詞)", en: "Intelligent Shift Gear" }
+                        ]
+                    },
+                    {
+                        name: "三、 離合器組件 (Clutch Components)",
+                        words: [
+                            { ch: "離合器片", en: "Clutch Disk" },
+                            { ch: "釋放軸承", en: "Release Bearing" },
+                            { ch: "離合器踏板", en: "Clutch Pedal" },
+                            { ch: "離合器壓板", en: "Clutch Pressure Plate" },
+                            { ch: "離合器分缸", en: "Clutch Slave Cylinder" },
+                            { ch: "離合器總缸", en: "Clutch Master Cylinder" },
+                            { ch: "嚮導軸承(相關名詞)", en: "Pilot Bearing" },
+                            { ch: "軸承座(相關名詞)", en: "Bearing Seat" },
+                            { ch: "釋放叉(相關名詞)", en: "Release Fork" },
+                            { ch: "膜片彈簧式離合器(相關名詞)", en: "Diaphragm Spring Clutch" },
+                            { ch: "圈狀彈簧式離合器(相關名詞)", en: "Coil Spring Clutch" }
+                        ]
+                    },
+                    {
+                        name: "四、 制動系統 (Brake System)",
+                        words: [
+                            { ch: "ABS 液壓單元", en: "ABS Hydraulic Unit" },
+                            { ch: "煞車碟盤", en: "Brake Disc" },
+                            { ch: "煞車箝夾", en: "Brake Caliper" },
+                            { ch: "真空輔助煞車增壓器", en: "Vacuum Brake Booster" },
+                            { ch: "煞車總缸", en: "Brake Master Cylinder" },
+                            { ch: "駐車煞車拉桿", en: "Parking Brake Lever" },
+                            { ch: "煞車管路", en: "Brake Pipe" },
+                            { ch: "比例閥", en: "Proportional Valve" },
+                            { ch: "防鎖定煞車系統(ABS)", en: "Anti-Lock Braking System" },
+                            { ch: "循跡控制系統(TCS)", en: "Traction Control System" },
+                            { ch: "電子煞車力分配系統(EBD)", en: "Electronic Braking Force Distribution System" },
+                            { ch: "動態穩定控制系統(ESP/ESC/DSC)", en: "Electronic Stability Program" },
+                            { ch: "緊急煞車輔助控制(EBA)", en: "Emergency Brake Assist" },
+                            { ch: "煞車油", en: "Brake Fluid" },
+                            { ch: "美國交通部(DOT)", en: "Department of Transportation" },
+                            { ch: "雙迴路煞車", en: "Dual line Brake" },
+                            { ch: "碟式煞車", en: "Disc Brake" },
+                            { ch: "鼓式煞車", en: "Drum Brake" },
+                            { ch: "駐車煞車", en: "Parking Brake" },
+                            { ch: "駐車煞車纜線", en: "Parking Brake Cable" },
+                            { ch: "煞車踏板", en: "Brake Pedal" },
+                            { ch: "釋放鈕", en: "Release Button" },
+                            { ch: "煞車軟管", en: "Brake Hose" },
+                            { ch: "煞車來令片", en: "Brake Lining" },
+                            { ch: "引擎煞車", en: "Engine Brake" },
+                            { ch: "輔助煞車", en: "Auxiliary Brake" },
+                            { ch: "全氣壓煞車", en: "Full Brake" },
+                            { ch: "排氣煞車", en: "Exhaust Brake" },
+                            { ch: "引擎減速器", en: "Engine Retarder" },
+                            { ch: "油壓減速器", en: "Retarder" },
+                            { ch: "煞車燈開關", en: "Brake Light Switch" },
+                            { ch: "側向感知器", en: "Lateral Sensor" },
+                            { ch: "偏航感知器", en: "Yaw Sensor" },
+                            { ch: "輪速感知器", en: "Wheel Speed Sensor" }
+                        ]
+                    },
+                    {
+                        name: "五、 懸吊系統 (Suspension System)",
+                        words: [
+                            { ch: "避震器", en: "Shock Absorber" },
+                            { ch: "輪轂", en: "Hub" },
+                            { ch: "橫樑", en: "Crossmember" },
+                            { ch: "車輪軸承", en: "Wheel Bearing" },
+                            { ch: "心軸(羊角)", en: "Spindle" },
+                            { ch: "支柱總成", en: "Strut Assembly" },
+                            { ch: "平穩桿(相關名詞)", en: "Stabilizer" },
+                            { ch: "控制臂(相關名詞)", en: "Control Arms" },
+                            { ch: "三角架(相關名詞)", en: "Swinging Arm" },
+                            { ch: "減震器(相關名詞)", en: "Damper" },
+                            { ch: "空氣彈簧(相關名詞)", en: "Air Spring" },
+                            { ch: "片狀彈簧(相關名詞)", en: "Leaf Spring" },
+                            { ch: "圈狀彈簧(相關名詞)", en: "Coil Spring" }
+                        ]
+                    },
+                    {
+                        name: "六、 轉向系統 (Steering System)",
+                        words: [
+                            { ch: "方向盤", en: "Steering Wheel" },
+                            { ch: "方向機柱", en: "Steering Column" },
+                            { ch: "動力方向機", en: "Power Steering" },
+                            { ch: "橫拉桿", en: "Tie Rod" },
+                            { ch: "球接頭", en: "Ball Joint" },
+                            { ch: "動力轉向儲油壺", en: "Power Steering Fluid Reservoir" },
+                            { ch: "動力轉向邦浦", en: "Power Steering Pump" },
+                            { ch: "四輪轉向(相關名詞)", en: "Four-Wheel Steering" },
+                            { ch: "轉向軸(相關名詞)", en: "Steering Shaft" },
+                            { ch: "最小轉向半徑(相關名詞)", en: "Minimum Turning Radius" },
+                            { ch: "直拉桿(相關名詞)", en: "Drag Link" },
+                            { ch: "橫拉桿球頭(相關名詞)", en: "Tie Rod End" },
+                            { ch: "彈簧吊耳(相關名詞)", en: "Spring Hanger" },
+                            { ch: "車輪定位(相關名詞)", en: "Wheel Alignment" },
+                            { ch: "前束(相關名詞)", en: "Toe In" },
+                            { ch: "轉向前展(相關名詞)", en: "Toe Out On Turns" },
+                            { ch: "後傾角(相關名詞)", en: "Caster" },
+                            { ch: "外傾角(相關名詞)", en: "Camber" },
+                            { ch: "內傾角(相關名詞)", en: "Steering Axle Inclination" },
+                            { ch: "輪胎平衡(相關名詞)", en: "Wheel Balance" },
+                            { ch: "校正(相關名詞)", en: "Calibration" },
+                            { ch: "轉向節(相關名詞)", en: "Steering Knuckle" },
+                            { ch: "轉向節臂(相關名詞)", en: "Steering Knuckle Arm" },
+                            { ch: "轉向齒輪(相關名詞)", en: "Steering Gear" },
+                            { ch: "轉向齒輪比(相關名詞)", en: "Steering Gear Ratio" },
+                            { ch: "防塵套(相關名詞)", en: "Boot" }
+                        ]
+                    }
+                ]
+            },
+            {
+                chapter: "第四章 電系 (Electrical System)",
+                shortName: "第四章 電系",
+                subs: [
+                    {
+                        name: "一、 點火系統 (Ignition System)",
+                        words: [
+                            { ch: "點火線圈", en: "Ignition Coil" },
+                            { ch: "火星塞", en: "Spark Plug" },
+                            { ch: "點火控制電腦", en: "Ignition Control Unit" },
+                            { ch: "凸輪軸位置感知器", en: "Camshaft Position Sensor" },
+                            { ch: "曲軸位置感知器", en: "Crankshaft Position Sensor" },
+                            { ch: "高壓線(相關名詞)", en: "High Tension Cable" },
+                            { ch: "分電盤(相關名詞)", en: "Distributor" },
+                            { ch: "電子點火(相關名詞)", en: "Electronic Ignition" },
+                            { ch: "點火正時(相關名詞)", en: "Ignition Timing" },
+                            { ch: "點火順序(相關名詞)", en: "Firing Order" },
+                            { ch: "火星塞間隙(相關名詞)", en: "Spark Plug Gap" }
+                        ]
+                    },
+                    {
+                        name: "二、 充電系統 (Charging System)",
+                        words: [
+                            { ch: "電瓶", en: "Battery" },
+                            { ch: "交流發電機", en: "Alternator" },
+                            { ch: "正極(相關名詞)", en: "Positive" },
+                            { ch: "負極(相關名詞)", en: "Negative" },
+                            { ch: "直流電(DC)(相關名詞)", en: "Direct Current" },
+                            { ch: "交流電(AC)(相關名詞)", en: "Alternating Current" },
+                            { ch: "搭鐵(相關名詞)", en: "Ground Circuit" },
+                            { ch: "短路(相關名詞)", en: "Short Circuit" }
+                        ]
+                    },
+                    {
+                        name: "三、 起動系統 (Starting System)",
+                        words: [
+                            { ch: "點火開關", en: "Ignition Switch" },
+                            { ch: "起動馬達", en: "Starting Motor" }
+                        ]
+                    },
+                    {
+                        name: "四、 燈光系統 (Lighting System)",
+                        words: [
+                            { ch: "頭燈", en: "Head Lamp" },
+                            { ch: "霧燈", en: "Fog Lamp" },
+                            { ch: "尾燈", en: "Tail Lamp" },
+                            { ch: "方向燈", en: "Turn Signal Light" },
+                            { ch: "煞車燈", en: "Stop Lamp" },
+                            { ch: "近光(相關名詞)", en: "Low Beam(Dipped-Beam)" },
+                            { ch: "遠光(相關名詞)", en: "High Beam(Main-Beam)" },
+                            { ch: "車寬燈(相關名詞)", en: "Clearance Lamp" },
+                            { ch: "晝行燈(相關名詞)", en: "Daytime Running Lamp" },
+                            { ch: "危險警示燈(相關名詞)", en: "Hazard Warning Lamp" },
+                            { ch: "側方標示燈(相關名詞)", en: "Side Marker Lamp" },
+                            { ch: "停車燈(相關名詞)", en: "Parking Lamp" },
+                            { ch: "倒車燈(相關名詞)", en: "Reversing Lamp" },
+                            { ch: "後號牌燈(相關名詞)", en: "Rear Registration Plate Lamp" },
+                            { ch: "燈光開關(相關名詞)", en: "Light Switch" },
+                            { ch: "高敏感度氣體放電(HID)", en: "High Intensity Discharge" }
+                        ]
+                    },
+                    {
+                        name: "五、 空調系統 (Air Conditioning System)",
+                        words: [
+                            { ch: "冷凝器", en: "Condenser" },
+                            { ch: "乾燥瓶", en: "Dehydrator (Dry Receiver)" },
+                            { ch: "壓縮機", en: "Compressor" },
+                            { ch: "蒸發器", en: "Evaporator" },
+                            { ch: "自動恆溫空調系統(相關名詞)", en: "Automatic Air Conditioning" },
+                            { ch: "鼓風機(相關名詞)", en: "Blower" },
+                            { ch: "空氣調節(A/C)(相關名詞)", en: "Air Condition" },
+                            { ch: "膨脹閥(相關名詞)", en: "Expansion Valve" }
+                        ]
+                    },
+                    {
+                        name: "六、 車身電系 (Body Electrical System)",
+                        words: [
+                            { ch: "線組", en: "Cable Harness" },
+                            { ch: "喇叭", en: "Horn" },
+                            { ch: "空氣囊", en: "Air Bag" },
+                            { ch: "保險絲盒", en: "Fuse Box" },
+                            { ch: "音響喇叭", en: "Speaker" },
+                            { ch: "儀表總成", en: "Instrument Cluster" },
+                            { ch: "繼電器(相關名詞)", en: "Relay" },
+                            { ch: "電動窗(相關名詞)", en: "Power Windows" },
+                            { ch: "雨刷(相關名詞)", en: "Windshield Wiper" },
+                            { ch: "燃油表(相關名詞)", en: "Fuel Gauge" },
+                            { ch: "汽車區域網路(CAN bus)", en: "Controller Area Network" }
+                        ]
+                    }
+                ]
+            },
+            {
+                chapter: "第五章 車身 (Car body)",
+                shortName: "第五章 車身",
+                subs: [
+                    {
+                        name: "一、 車門與玻璃 (Door & Glass)",
+                        words: [
+                            { ch: "引擎蓋", en: "Hood" },
+                            { ch: "擋風玻璃", en: "Windshield" },
+                            { ch: "天窗", en: "Sun Roof" },
+                            { ch: "行李箱", en: "Trunk" }
+                        ]
+                    },
+                    {
+                        name: "二、 外觀 (Exterior)",
+                        words: [
+                            { ch: "室內後視鏡", en: "Interior Rearview Mirror" },
+                            { ch: "保險桿", en: "Bumper" },
+                            { ch: "照後鏡(後視鏡)", en: "Backward Mirror (Rearview Mirror)" },
+                            { ch: "鋼圈", en: "Rim" },
+                            { ch: "安全帶(相關名詞)", en: "Seat Belt" },
+                            { ch: "座位(相關名詞)", en: "Seat" },
+                            { ch: "大樑(車架)(相關名詞)", en: "Frame" }
+                        ]
+                    }
+                ]
+            },
+            {
+                chapter: "第六章 其他 (Annexations)",
+                shortName: "第六章 其他",
+                subs: [
+                    {
+                        name: "一、 替代能源車輛 (Energy Alternative)",
+                        words: [
+                            { ch: "燃料電池車(FCV)", en: "Fuel Cell Powered Vehicle" },
+                            { ch: "油電複合動力車(HEV)", en: "Hybrid Electric Vehicle" },
+                            { ch: "太陽能車", en: "Solar Energy Car" },
+                            { ch: "電動汽車(EV)", en: "Electric Vehicle" }
+                        ]
+                    },
+                    {
+                        name: "二、 駕駛輔助系統 (Driver Assistance System)",
+                        words: [
+                            { ch: "車上診斷系統(OBD)", en: "On Board Diagnostic System" },
+                            { ch: "胎壓偵測系統(TPMS)", en: "Tire Pressure Monitoring System" },
+                            { ch: "全球定位系統(GPS)", en: "Global Positioning System" },
+                            { ch: "駐車輔助系統(PA)", en: "Parking Aid System" },
+                            { ch: "適應性定速控制系統(ACC)", en: "Adaptive Cruise Control System" },
+                            { ch: "夜視系統(NV)", en: "Night Vision System" },
+                            { ch: "車道偏離警告系統(LDWS)", en: "Lane Departure Warning System" },
+                            { ch: "防撞自動煞車系統(EBS)", en: "Predictive Emergency Braking System" }
+                        ]
+                    },
+                    {
+                        name: "三、 車輛檢驗 (Inspection of Vehicle)",
+                        words: [
+                            { ch: "曳引車", en: "Tractor" },
+                            { ch: "拖車", en: "Trailer" },
+                            { ch: "全拖車", en: "Fulltrailer" },
+                            { ch: "半拖車", en: "Semitrailer" },
+                            { ch: "瓦斯車", en: "L.P.G. Car" },
+                            { ch: "檢驗設備", en: "Inspection Equipment" },
+                            { ch: "軸距", en: "Wheelbase" },
+                            { ch: "輪距", en: "Tread" },
+                            { ch: "前懸", en: "Fronthang" },
+                            { ch: "後懸", en: "Overhang" },
+                            { ch: "全長", en: "Overall Length" },
+                            { ch: "全寬", en: "Overall Width" },
+                            { ch: "全高", en: "Overall Height" },
+                            { ch: "汽車總重(GVW)", en: "Gross Vehicle Weight" },
+                            { ch: "爬坡能力", en: "Grade Ability" },
+                            { ch: "緊急出口", en: "Emergency Exit" },
+                            { ch: "滅火器", en: "Fire Extinguisher" },
+                            { ch: "廠牌", en: "Brand" },
+                            { ch: "引擎號碼", en: "Engine Number" },
+                            { ch: "車身號碼", en: "Chassis Number" },
+                            { ch: "車身識別碼(VIN)", en: "Vehicle Identification Number" },
+                            { ch: "行車紀錄器", en: "Tachograph" }
+                        ]
+                    },
+                    {
+                        name: "四、 公路監理 (Motor Vehicle Service)",
+                        words: [
+                            { ch: "公路監理機關", en: "Motor Vehicle Office" },
+                            { ch: "駕駛執照", en: "Driving Licence" },
+                            { ch: "證明書", en: "Certificate" },
+                            { ch: "進口證明", en: "Certificate of Import" },
+                            { ch: "檢驗員證", en: "Certification for Inspector" },
+                            { ch: "讓渡證書", en: "Transfer" },
+                            { ch: "車輛讓渡書", en: "Vehicle Transfer" },
+                            { ch: "汽車牌照", en: "Car Plate" },
+                            { ch: "報廢", en: "Scrappage" },
+                            { ch: "汽車保養場", en: "Workshop" },
+                            { ch: "大修", en: "Overhaul" }
+                        ]
+                    },
+                    {
+                        name: "五、 交通控制 (Traffic Control)",
+                        words: [
+                            { ch: "交通規則", en: "Traffic Regulation" },
+                            { ch: "紅綠燈", en: "Traffic Lights" },
+                            { ch: "指示標誌", en: "Guide Signs" },
+                            { ch: "禁制標誌", en: "Prohibitory Signs" },
+                            { ch: "警告標誌", en: "Warning Signs" },
+                            { ch: "人行道", en: "Sidewalk" },
+                            { ch: "快速公路", en: "Expressway" },
+                            { ch: "高速公路", en: "Freeway" },
+                            { ch: "入口匝道", en: "Entrance Ramp" },
+                            { ch: "交流道", en: "Interchange" },
+                            { ch: "違規停車", en: "Parking Violation" },
+                            { ch: "鐵路平交道", en: "Railroad Crossing" }
+                        ]
+                    },
+                    {
+                        name: "六、 小型車進口完免稅證明書 (Certificate)",
+                        words: [
+                            { ch: "年份", en: "Year" },
+                            { ch: "車輛型式", en: "Car Type" },
+                            { ch: "轎車", en: "Sedan" },
+                            { ch: "車門", en: "Door" },
+                            { ch: "廠牌", en: "Brand" },
+                            { ch: "車輛型號", en: "Model" },
+                            { ch: "排氣量", en: "Displacement" },
+                            { ch: "汽缸", en: "Cylinder" },
+                            { ch: "座位", en: "Seat" },
+                            { ch: "左側方向盤", en: "Left Side Steering" },
+                            { ch: "變速箱", en: "Transmission" },
+                            { ch: "引擎", en: "Engine" },
+                            { ch: "限用", en: "Limite to Use" },
+                            { ch: "無鉛汽油", en: "Unleaded Gasoline" },
+                            { ch: "標準配備", en: "Standard Equipment" },
+                            { ch: "蒸發污染控制裝置(EVAP)", en: "Evaporative-Emissions Control System" },
+                            { ch: "觸媒轉化器", en: "Catalyst Converter" },
+                            { ch: "非氟氯碳化物(NON CFC)", en: "Non CFC" },
+                            { ch: "冷媒系統", en: "Refrigerant System" }
+                        ]
+                    },
+                    {
+                        name: "七、 大型車進口完免稅證明書 & 出廠證明",
+                        words: [
+                            { ch: "大貨車底盤", en: "Truck Chassis" },
+                            { ch: "駕駛台", en: "Cab" },
+                            { ch: "備胎", en: "spare tire" },
+                            { ch: "柴油", en: "Diesel" },
+                            { ch: "水冷式", en: "Watercooled" },
+                            { ch: "直接噴射式", en: "Direct Injection" },
+                            { ch: "最大輸出", en: "Max. output" },
+                            { ch: "軸距", en: "Wheelbase" },
+                            { ch: "車輛總重量(G.V.W.)", en: "Gross Vehicle Weight" },
+                            { ch: "輪距", en: "Tread" },
+                            { ch: "底盤荷重(載重)", en: "Chassis loading capacity" },
+                            { ch: "車身號碼", en: "Chassis No." },
+                            { ch: "引擎號碼", en: "Engine No." },
+                            { ch: "汽車型式", en: "Motor Vehicle Type" },
+                            { ch: "核准機關", en: "Approval Authorities" },
+                            { ch: "證明書", en: "Certificate" },
+                            { ch: "證明", en: "Certified" },
+                            { ch: "符合", en: "satisfy" },
+                            { ch: "以下所述", en: "below-mentioned" },
+                            { ch: "廢氣排放標準", en: "Exhaust Emission Regulations" },
+                            { ch: "規定", en: "Requirements" },
+                            { ch: "最高容許廢氣排放", en: "Max. Permissible Emission" },
+                            { ch: "柴油車排煙", en: "Diesel Smoke" },
+                            { ch: "最高轉速", en: "Max. Revolution" },
+                            { ch: "全加速", en: "full acceleration" },
+                            { ch: "柴油引擎", en: "diesel engine" }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // 語速變數控制
+        const speedRange = document.getElementById('speedRange');
+        const speedVal = document.getElementById('speedVal');
+        let globalSpeechRate = 1.0;
+
+        speedRange.addEventListener('input', (e) => {
+            globalSpeechRate = parseFloat(e.target.value);
+            speedVal.textContent = globalSpeechRate.toFixed(1) + 'x';
+        });
+
+        // 文字轉語音 (連動即時語速設定)
+        function speakWord(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // 先暫停上一個
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = globalSpeechRate;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("抱歉！您的裝置不支援網頁發音語音。");
+            }
+        }
+
+        // 動態生成導覽列與單字卡片區塊
+        const navTabs = document.getElementById('navTabs');
+        const mainContent = document.getElementById('mainContent');
+
+        database.forEach((chapData, chapIndex) => {
+            const chapId = `chapter-${chapIndex}`;
+            
+            // 計算大章節內全部小章節的單字總數
+            let totalWordsInChap = 0;
+            chapData.subs.forEach(s => totalWordsInChap += s.words.length);
+
+            // 1. 生成頂部導覽按鈕 (包含：大章節完整名稱、計數器修正為純數字)
+            const navBtn = document.createElement('button');
+            navBtn.className = `nav-btn ${chapIndex === 0 ? 'active' : ''}`;
+            navBtn.innerHTML = `${chapData.shortName} <span class="count-badge">${totalWordsInChap}</span>`;
+            
+            navBtn.addEventListener('click', () => {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                navBtn.classList.add('active');
+                const targetSection = document.getElementById(chapId);
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+            navTabs.appendChild(navBtn);
+
+            // 2. 生成大章節 Section 容器
+            const chapSection = document.createElement('section');
+            chapSection.className = 'chapter-section';
+            chapSection.id = chapId;
+
+            const chapTitle = document.createElement('h2');
+            chapTitle.className = 'chapter-title';
+            chapTitle.textContent = chapData.chapter;
+            chapSection.appendChild(chapTitle);
+
+            // 建立小章節專用網格
+            const subsGrid = document.createElement('div');
+            subsGrid.className = 'sub-chapters-grid';
+
+            // 3. 渲染小章節獨立區塊
+            chapData.subs.forEach((subData) => {
+                const subBlock = document.createElement('div');
+                subBlock.className = 'sub-chapter-block';
+
+                const subTitle = document.createElement('h3');
+                subTitle.className = 'sub-chapter-title';
+                subTitle.textContent = subData.name;
+                subBlock.appendChild(subTitle);
+
+                const wordsList = document.createElement('div');
+                wordsList.className = 'words-list';
+
+                // 清洗小章節標題名稱，用作細項分類標籤
+                const cleanTag = subData.name.replace(/^[一二三四五六七八九十]+、\s*/, '').split(" ")[0];
+
+                // 4. 生成小章節內的各個獨立編號單字
+                subData.words.forEach((word, wordIndex) => {
+                    const wordCard = document.createElement('div');
+                    wordCard.className = 'word-card';
+
+                    wordCard.innerHTML = `
+                        <div class="word-info">
+                            <div class="word-chinese-row">
+                                <span class="word-num">${wordIndex + 1}.</span>
+                                <span class="word-ch">${word.ch}</span>
+                                <span class="tag-label">${cleanTag}</span>
+                            </div>
+                            <div class="word-en">${word.en}</div>
+                        </div>
+                        <button class="speak-btn" title="點擊聆聽發音" onclick="speakWord('${word.en.replace(/'/g, "\\'")}')">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.25-2.5-4.01v8.02c1.48-.76 2.5-2.24 2.5-4.01zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                            </svg>
+                        </button>
+                    `;
+                    wordsList.appendChild(wordCard);
+                });
+
+                subBlock.appendChild(wordsList);
+                subsGrid.appendChild(subBlock);
+            });
+
+            chapSection.appendChild(subsGrid);
+            mainContent.appendChild(chapSection);
+        });
+
+        // 智慧滾動高亮：滑動網頁時，上方導覽列按鈕自動切換 active 狀態
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.chapter-section');
+            const scrollPos = window.scrollY + 160;
+
+            sections.forEach(section => {
+                if (scrollPos >= section.offsetTop && scrollPos < (section.offsetTop + section.offsetHeight)) {
+                    const currentId = section.getAttribute('id');
+                    const btns = document.querySelectorAll('.nav-btn');
+                    database.forEach((data, index) => {
+                        if (`chapter-${index}` === currentId) {
+                            btns[index].classList.add('active');
+                        } else {
+                            btns[index].classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
